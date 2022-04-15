@@ -1,6 +1,5 @@
 <?php
    session_start();
-
    @$username=$_POST["login"];
    @$password=$_POST["pass"];
    @$valider=$_POST["valider"];
@@ -12,12 +11,15 @@
    $domaine = '@chatelet.local';
    $ldap_conn = ldap_connect($serveur_ldap,$port_ldap) or $erreur="Connexion impossible au LDAP"; ;
    
+   //Config IP
+   $ip = $_SERVER['REMOTE_ADDR'];
+
 
    if(isset($_POST["valider"])){
       $ldap_bind = ldap_bind($ldap_conn, $username.$domaine, $password);
       if($ldap_bind){
          $_SESSION["autoriser"]="oui";
-         header("location:session.php");
+         header("location:2AF.php");
       }
       else{
          $erreur="Mauvais login ou mot de passe!";
@@ -38,23 +40,27 @@
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-50 p-b-90">
 				<form class="login100-form validate-form flex-sb flex-w" name="fo" method="post" action="">  
-                <span class="login100-form-title p-b-51">
+               <span class="login100-form-title p-b-51">
 						MSPR EPSI
-                </span>
-                <div class="erreur"><?php echo $erreur ?></div>
-                
-                <div class="wrap-input100 validate-input m-b-16">
-                    <input class ="input100" type="text" name="login" placeholder="Nom d'utilisateur" />
-					<span class="focus-input100"></span>
-                </div>
+               </span>
+              
+               <div class="erreur"><?php echo $erreur ?></div>
 
-			    <div class="wrap-input100 validate-input m-b-16">
-                    <input class ="input100" type="password" name="pass" placeholder="Mot de passe" />
-					
-			    </div>
-			    <div class="container-login100-form-btn m-t-17">
+               <div class="wrap-input100 validate-input m-b-16">
+                  <input class ="input100" type="text" name="login" placeholder="Nom d'utilisateur" />
+					<span class="focus-input100"></span>
+               </div>
+
+			      <div class="wrap-input100 validate-input m-b-16">
+                  <input class ="input100" type="password" name="pass" placeholder="Mot de passe" />
+					</div>
+               <span class="wrap-input100 validate-input m-b-16">
+                  <?php echo "Votre IP est : $ip" ?>
+               </span>
+                  
+			      <div class="container-login100-form-btn m-t-17">
    				    <input class="login100-form-btn" type="submit" name="valider" value="S'authentifier" />
-			    </div>
+			      </div>
 				</form>
 			</div>
 		</div>

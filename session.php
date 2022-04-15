@@ -1,16 +1,13 @@
 <?php
    session_start();
-
-   $add = $_SERVER['REMOTE_ADDR'] ;
-
    if($_SESSION["autoriser"]!="oui"){
       header("location:login.php");
       exit();
    }
    if(date("H")<18)
-      $bienvenue="Bonjour et bienvenue dans votre espace personnel, $add";
+      $bienvenue="Bonjour et bienvenue dans votre espace personnel";
    else
-      $bienvenue="Bonsoir et bienvenue dans votre espace personnel, $add";
+      $bienvenue="Bonsoir et bienvenue dans votre espace personnel";
 ?>
 <!DOCTYPE html>
 <html>
